@@ -6,7 +6,7 @@ d <- expand.grid(
   alpha = alpha,
   beta = beta,
   sigma = seq(0, 0.3, 0.05),
-  num_pop = seq(1, 12, 2),
+  num_pop = seq(1, MaxN, 2),
   m = m,
   q = q,
   cpar = cpar,
@@ -29,7 +29,7 @@ paradox_sim_out <- plyr::adply(d, 1, function(x) {
 col <- RColorBrewer::brewer.pal(9, "YlOrRd")
 col <- smooth_pal(col, 5)
 z <- as.matrix(reshape2::dcast(paradox_sim_out, num_pop ~ sigma, value.var = "pe")[,-1])
-filled.contour(seq(1, 12, length.out = nrow(z)), seq(0, 0.3,
+filled.contour(seq(1, MaxN, length.out = nrow(z)), seq(0, 0.3,
      length.out = ncol(z)), z, col = col, ylab = "Sigma", xlab = "N",
    levels = seq(1, max(z), length.out = length(col)),
    main = "Portfolio Effect", lwd = 0.1)}
@@ -39,4 +39,5 @@ filled.contour(seq(1, 12, length.out = nrow(z)), seq(0, 0.3,
   n = slider(0.4, 1.5, 1), 
   p = slider(0.5, 1.5, 1), 
   alpha = slider(0.1, 1.5, 0.5), 
-  beta = slider(1/500, 1/10, 1/150))
+  beta = slider(1/500, 1/10, 1/150),
+  MaxN = slider(2,40,10))
