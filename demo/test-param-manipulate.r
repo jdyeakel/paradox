@@ -40,4 +40,4 @@ filled.contour(seq(1, MaxN, length.out = nrow(z)), seq(0, 0.3,
   p = slider(0.5, 1.5, 1), 
   alpha = slider(0.1, 1.5, 0.5), 
   beta = slider(1/500, 1/10, 1/150),
-  MaxN = slider(2,40,10))
+  MaxN = slider(2,40,15))
