@@ -28,7 +28,7 @@ paradox_diag_plot <- function(x) {
     with(z[[i]], filled_contour(x_vals, y_vals, vals, levels = levels_, col = col))
     mtext(titles[i])
     if(i == 1) {
-      with(x, plot(num_pop, vuln, col = "#00000050", pch = 19, cex =
+      with(x, plot(pe, vuln, col = "#00000050", pch = 19, cex =
           0.9, ylim = c(0, 1), yaxs = "i"))
       mtext("Vulnerability")
     }
