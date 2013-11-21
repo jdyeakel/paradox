@@ -12,7 +12,7 @@
   Make a multipanel diagnostic plot
 }
 \examples{
-out <- paradox_sim_reps(reps = 10)
+out <- paradox_sim_reps(reps = 10, t_end = 300, burnin = 150)
 paradox_diag_plot(out)
 }
 
