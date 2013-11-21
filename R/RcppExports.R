@@ -32,9 +32,15 @@
 #' originally ported by Sean Anderson.
 #' @return A list object. \code{$performance} contains the performance
 #' attributes. If \code{return_ts = TRUE}: \code{$biomass} contains the biomass
-#' matrix (time is incremented along the columns and populations down the rows
-#' without the burnin period removed); \code{$effort} contains the effort in a
-#' numeric vector.
+#' matrix (time is incremented along the columns and populations down the rows;
+#' the burnin period has been removed); \code{$effort} contains the effort in a
+#' numeric vector with burnin removed.
+#' 
+#' The \code{performance} data.frame contains (in order of columns)
+#' the average-CV portfolio effect, the mean standard deviation of
+#' the subpopulation biomasses, the mean mean of the subpopulation
+#' biomasses, the standard deviation of the total biomass, the mean of
+#' the total biomass, and the Loreau and de Mazancourt synchrony index.
 #' @examples
 #' out <- paradox_sim(alpha = rep(0.5, 10), return_ts = TRUE)
 #' names(out)
