@@ -21,9 +21,9 @@ paradox_sim_out <- plyr::adply(d, 1, function(x) {
     temp <- with(x, paradox_pe_sim(t_end = 1000, alpha = rep(alpha,
           num_pop), beta = beta, m = m, q = q, n = n, num_pop =
         num_pop, cpar = cpar, p = p, sigma = sigma))
-    data.frame(pe = temp$pe, sync = temp$sync)
+    data.frame(pe = temp$pe, vuln = temp$vuln)
 })
-  data.frame(pe = mean(junk$pe), sync = mean(junk$sync))
+  data.frame(pe = mean(junk$pe), vuln = mean(junk$vuln))
 })
 #browser()
 col <- RColorBrewer::brewer.pal(9, "YlOrRd")
