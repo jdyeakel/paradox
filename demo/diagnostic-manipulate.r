@@ -20,10 +20,10 @@ n = slider(0.4, 1.5, 1),
 p = slider(0.5, 1.5, 1),
 alpha = slider(0.1, 1.5, 0.5),
 beta = slider(1/500, 1/10, 1/150),
-maxn = slider(2,40,15),
-reps = slider(5, 100, 15),
+maxn = slider(2,40, 20),
+reps = slider(5, 100, 20),
 max_sigma = slider(0.1, 1.5, 0.5),
-t_end = slider(100, 2000, 600)
+t_end = slider(100, 2000, 700)
 )
 
 
