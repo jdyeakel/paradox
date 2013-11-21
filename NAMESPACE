@@ -1,3 +1,4 @@
+export(filled_contour)
 export(get_pe)
 export(paradox_pe_sim)
 export(paradox_sim)
