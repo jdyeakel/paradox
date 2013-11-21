@@ -13,14 +13,14 @@ d <- expand.grid(
   p = p,
   n = n)
 
-repititions <- 30
+repititions <- 15
 
 
 paradox_sim_out <- plyr::adply(d, 1, function(x) {
   junk <- plyr::rdply(repititions, function(y) {
-    temp <- with(x, paradox_pe_sim(t_end = 1000, alpha = rep(alpha,
+    temp <- with(x, paradox_sim(t_end = 1000, alpha = rep(alpha,
           num_pop), beta = beta, m = m, q = q, n = n, num_pop =
-        num_pop, cpar = cpar, p = p, sigma = sigma))
+        num_pop, cpar = cpar, p = p, sigma = sigma))$performance
     data.frame(pe = temp$pe, vuln = temp$vuln)
 })
   data.frame(pe = mean(junk$pe), vuln = mean(junk$vuln))
@@ -28,7 +28,9 @@ paradox_sim_out <- plyr::adply(d, 1, function(x) {
 #browser()
 col <- RColorBrewer::brewer.pal(9, "YlOrRd")
 col <- smooth_pal(col, 5)
+
 z <- as.matrix(reshape2::dcast(paradox_sim_out, num_pop ~ sigma, value.var = "pe")[,-1])
+  browser()
 filled.contour(seq(1, MaxN, length.out = nrow(z)), seq(0, 0.3,
      length.out = ncol(z)), z, col = col, ylab = "Sigma", xlab = "N",
    levels = seq(1, max(z), length.out = length(col)),
@@ -43,3 +45,4 @@ filled.contour(seq(1, MaxN, length.out = nrow(z)), seq(0, 0.3,
   alpha = slider(0.1, 1.5, 0.5), 
   beta = slider(1/500, 1/10, 1/150),
   MaxN = slider(2,40,15))
+
