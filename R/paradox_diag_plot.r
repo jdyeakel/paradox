@@ -16,30 +16,29 @@ paradox_diag_plot <- function(x) {
   pe_vals <- as.matrix(reshape2::dcast(x, num_pop ~ sigma, value.var = "pe")[,-1])
   pe_levels <- seq(1, max(pe_vals), length.out = length(col))
 
-  titles <- c("pe", "mean_mean_ts", "mean_sd_ts", "mean_total", "sd_total")
+  titles <- c("pe", "vuln", "mean_mean_ts", "mean_sd_ts", "mean_total", "sd_total", "sync")
   z <- plyr::llply(titles, function(y) get_zvals(x, y, col.length =
       length(col)))
 
   old.par <- par(no.readonly = TRUE)
   on.exit(par(old.par))
   par(mar = c(3, 3, .5, .5), oma = c(2, 2, 2, 2))
-  par(mfrow = c(3, 2), cex = 0.7)
+  par(mfrow = c(4, 2), cex = 0.7)
   for(i in seq_len(length(titles))) {
     with(z[[i]], filled_contour(x_vals, y_vals, vals, levels = levels_, col = col))
     mtext(titles[i])
-    if(i == 1) {
+    if(i == 6) {
       with(x, plot(pe, vuln, col = "#00000050", pch = 19, cex =
           0.9, ylim = c(0, 1), yaxs = "i"))
       mtext("Vulnerability")
     }
   }
-  invisible()
 }
 
 #' A function to get z values for the filled_contour
 get_zvals <- function(x, colname, col.length) {
   vals <- as.matrix(reshape2::dcast(x, num_pop ~ sigma, value.var
       = colname)[,-1])
-  levels_ <- seq(1, max(vals), length.out = col.length)
+  levels_ <- seq(min(vals), max(vals), length.out = col.length)
   list(vals = vals, levels_ = levels_)
 }
