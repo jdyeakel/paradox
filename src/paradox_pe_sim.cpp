@@ -99,11 +99,11 @@ Rcpp::List paradox_pe_sim(
     double vuln_TF = 0;
     for (int j = 0; j < (t_end - burnin); ++j) {
       if (biomass_burned(i,j) < 0.10*mean_ts(i)) {
-        vuln_TF = vuln_TF + 1;
+        vuln_TF += 1;
         }
     }
     if (vuln_TF > 0) {
-      vuln_cnt = vuln_cnt + 1;
+      vuln_cnt += 1;
     }
   }
   double vuln = vuln_cnt / num_pop;
