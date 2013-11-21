@@ -11,12 +11,22 @@ Depends:
 License: GPL-3
 LazyData: true
 LinkingTo: Rcpp
+Suggests:
+    doParallel,
+    foreach
+Imports:
+    plyr (>= 1.8),
+    reshape2 (>= 1.2.2),
+    RColorBrewer
 Collate:
     'RcppExports.R'
     'paradox-package.r'
     'paradox_sim_R.r'
     'smooth_pal.r'
     'filled_contour.r'
+    'paradox_sim_reps.r'
+    'setup_parallel.r'
+    'paradox_diag_plot.r'
 Packaged: 2013-11-19 22:58:44 UTC; seananderson
 Author: Justin Yeakel [aut, cre],
     Sean Anderson [aut]

@@ -1,5 +1,7 @@
 export(filled_contour)
+export(paradox_diag_plot)
 export(paradox_sim)
 export(paradox_sim_R)
+export(paradox_sim_reps)
 export(smooth_pal)
 useDynLib(paradox)

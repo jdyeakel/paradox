@@ -6,7 +6,8 @@
     alpha = numeric(), beta = 1/150, m = 0.01, n = 1,
     sigma = 0.05, q = 0.01, cpar = 1.4, p = 0.5,
     effort_init = 10, biomass_init = 50, vuln_thresh = 0.1,
-    burnin = 500L, return_ts = FALSE)
+    burnin = 500L, return_ts = FALSE,
+    print_diagnostics = FALSE)
 }
 \arguments{
   \item{t_end}{Number of time steps to simulate over}
@@ -53,14 +54,26 @@
   series should be returned as part of the output.
   \code{FALSE} by default to save memory if running many
   repetitions.}
+
+  \item{print_diagnostics}{Logical indicating whether some
+  print statements should be enabled to help debug.}
 }
 \value{
   A list object. \code{$performance} contains the
   performance attributes. If \code{return_ts = TRUE}:
   \code{$biomass} contains the biomass matrix (time is
   incremented along the columns and populations down the
-  rows without the burnin period removed); \code{$effort}
-  contains the effort in a numeric vector.
+  rows; the burnin period has been removed); \code{$effort}
+  contains the effort in a numeric vector with burnin
+  removed.
+
+  The \code{performance} data.frame contains (in order of
+  columns) the average-CV portfolio effect, the mean
+  standard deviation of the subpopulation biomasses, the
+  mean mean of the subpopulation biomasses, the standard
+  deviation of the total biomass, the mean of the total
+  biomass, and the Loreau and de Mazancourt synchrony
+  index.
 }
 \description{
   Simulate biomass and effort trajectories
