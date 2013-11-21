@@ -19,6 +19,7 @@ Rcpp::List paradox_pe_sim(
     double p = 0.5,
     double effort_init = 10,
     double biomass_init = 50
+    int burnin = 500,
     ) {
   NumericMatrix biomass(num_pop, t_end);
   NumericVector effort(t_end);
@@ -57,8 +58,6 @@ Rcpp::List paradox_pe_sim(
     //ts(num_pop + 1 - 1, _) = effort;
     
   // remove burn-in period:
-  int burnin = 500;
-
   NumericMatrix biomass_burned(num_pop, t_end - burnin);
   for (int j = 0; j < (t_end - burnin); ++j) { // cycle over time
     for (int i = 0; i < num_pop; ++i) { // cycle over populations
