@@ -56,12 +56,6 @@ Rcpp::List paradox_pe_sim(
     effort(j) = effort(j-1) * exp(-cpar) + p * total_biomass * 
       ((q * effort(j-1))/(m + q * effort(j-1))) * (1-exp(-m-q*effort(j-1)));
   }
-
-  // combine biomass and effort into one matrix
-    //for(int i = 0; i < num_pop; ++i) {
-       //ts(i, _) = biomass(i, _);
-    //}
-    //ts(num_pop + 1 - 1, _) = effort;
     
   // remove burn-in period:
   NumericMatrix biomass_burned(num_pop, t_end - burnin);
