@@ -31,8 +31,8 @@ get_pe <- function(x, num_pop, t_end) {
 #' Paradox simulation with PE output for speed YEA
 #'
 #' @export
-paradox_pe_sim <- function(t_end = 1000L, num_pop = 10L, alpha = numeric(), beta = 1/150, m = 0.01, n = 1, sigma = 0.05, q = 0.01, cpar = 1.4, p = 0.5, effort_init = 10, biomass_init = 50) {
-    .Call('paradox_paradox_pe_sim', PACKAGE = 'paradox', t_end, num_pop, alpha, beta, m, n, sigma, q, cpar, p, effort_init, biomass_init)
+paradox_pe_sim <- function(t_end = 1000L, num_pop = 10L, alpha = numeric(), beta = 1/150, m = 0.01, n = 1, sigma = 0.05, q = 0.01, cpar = 1.4, p = 0.5, effort_init = 10, biomass_init = 50, vuln_thresh = 0.1, burnin = 500L, return_ts = FALSE) {
+    .Call('paradox_paradox_pe_sim', PACKAGE = 'paradox', t_end, num_pop, alpha, beta, m, n, sigma, q, cpar, p, effort_init, biomass_init, vuln_thresh, burnin, return_ts)
 }
 
 #' Simulate biomass and effort trajectories
