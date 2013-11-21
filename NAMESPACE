@@ -1,6 +1,4 @@
 export(filled_contour)
-export(get_pe)
-export(paradox_pe_sim)
 export(paradox_sim)
 export(paradox_sim_R)
 export(smooth_pal)
