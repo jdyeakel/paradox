@@ -27,6 +27,11 @@ Rcpp::List paradox_pe_sim(
   NumericMatrix ts(num_pop + 1, t_end);
   NumericMatrix stoch_m(num_pop, t_end);
 
+  NumericVector sd_ts(num_pop);
+  NumericVector mean_ts(num_pop);
+  NumericVector total(t_end - burnin);
+  NumericVector CV_ts(num_pop);
+
   // initialize simulation values in first year
   for (int i = 0; i < num_pop; ++i) {
     biomass(i, 0) = biomass_init;
@@ -65,11 +70,6 @@ Rcpp::List paradox_pe_sim(
       biomass_burned(i, j) = biomass(i, j + burnin); 
     }
   }
-
-  NumericVector sd_ts(num_pop);
-  NumericVector mean_ts(num_pop);
-  NumericVector total(t_end - burnin);
-  NumericVector CV_ts(num_pop);
 
   for (int i = 0; i < num_pop; ++i) {
     sd_ts(i) = sd(biomass_burned(i,_));
