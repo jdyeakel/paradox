@@ -29,4 +29,6 @@ filled_contour <- function (x, y, z, xlim = range(x, finite = TRUE),
     plot.new()
     plot.window(xlim, ylim, ...)
     .filled.contour(x, y, z, levels, col)
+    axis(1, at = x)
+    axis(2, at = y)
 }
