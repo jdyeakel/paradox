@@ -32,9 +32,15 @@ using namespace Rcpp;
 //' originally ported by Sean Anderson.
 //' @return A list object. \code{$performance} contains the performance
 //' attributes. If \code{return_ts = TRUE}: \code{$biomass} contains the biomass
-//' matrix (time is incremented along the columns and populations down the rows
-//' without the burnin period removed); \code{$effort} contains the effort in a
-//' numeric vector.
+//' matrix (time is incremented along the columns and populations down the rows;
+//' the burnin period has been removed); \code{$effort} contains the effort in a
+//' numeric vector with burnin removed.
+//' 
+//' The \code{performance} data.frame contains (in order of columns)
+//' the average-CV portfolio effect, the mean standard deviation of
+//' the subpopulation biomasses, the mean mean of the subpopulation
+//' biomasses, the standard deviation of the total biomass, the mean of
+//' the total biomass, and the Loreau and de Mazancourt synchrony index.
 //' @examples
 //' out <- paradox_sim(alpha = rep(0.5, 10), return_ts = TRUE)
 //' names(out)
@@ -104,7 +110,9 @@ Rcpp::List paradox_sim(
     
   // remove burn-in period:
   NumericMatrix biomass_burned(num_pop, t_end - burnin);
+  NumericVector effort_burned(t_end - burnin);
   for (int j = 0; j < (t_end - burnin); ++j) { // cycle over time
+    effort_burned(j) = effort(j + burnin); 
     for (int i = 0; i < num_pop; ++i) { // cycle over populations
       biomass_burned(i, j) = biomass(i, j + burnin); 
     }
@@ -147,13 +155,6 @@ Rcpp::List paradox_sim(
   }
   double vuln = vuln_cnt / num_pop;
   
-  //return Rcpp::List::create(Rcpp::Named("pe") = PE,
-                            //Rcpp::Named("mean_sd_ts") = mean_sd_ts,
-                            //Rcpp::Named("mean_mean_ts") = mean_mean_ts,
-                            //Rcpp::Named("sd_total") = sd_total,
-                            //Rcpp::Named("mean_total") = sd_total,
-                            //Rcpp::Named("sync") = sync,
-                            //Rcpp::Named("vuln") = vuln);
   performance = Rcpp::DataFrame::create(Rcpp::Named("pe") = PE,
                 Rcpp::Named("mean_sd_ts") = mean_sd_ts,
                 Rcpp::Named("mean_mean_ts") = mean_mean_ts,
@@ -163,8 +164,8 @@ Rcpp::List paradox_sim(
                 Rcpp::Named("vuln") = vuln);
   
   if (return_ts == true) {
-  out = Rcpp::List::create(Rcpp::Named("biomass") = biomass,
-                           Rcpp::Named("effort") = effort,
+  out = Rcpp::List::create(Rcpp::Named("biomass") = biomass_burned,
+                           Rcpp::Named("effort") = effort_burned,
                            Rcpp::Named("performance") = performance);
   } else {
   out = Rcpp::List::create(Rcpp::Named("performance") = performance);
