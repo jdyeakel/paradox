@@ -5,52 +5,9 @@
 
 using namespace Rcpp;
 
-// get_pe
-Rcpp::List get_pe(NumericMatrix x, int num_pop, int t_end);
-RcppExport SEXP paradox_get_pe(SEXP xSEXP, SEXP num_popSEXP, SEXP t_endSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP );
-        Rcpp::traits::input_parameter< int >::type num_pop(num_popSEXP );
-        Rcpp::traits::input_parameter< int >::type t_end(t_endSEXP );
-        Rcpp::List __result = get_pe(x, num_pop, t_end);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
-// paradox_pe_sim
-Rcpp::List paradox_pe_sim(int t_end = 1000, int num_pop = 10, NumericVector alpha = NumericVector::create(), double beta = 1/150, double m = 0.01, double n = 1, double sigma = 0.05, double q = 0.01, double cpar = 1.4, double p = 0.5, double effort_init = 10, double biomass_init = 50);
-RcppExport SEXP paradox_paradox_pe_sim(SEXP t_endSEXP, SEXP num_popSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP mSEXP, SEXP nSEXP, SEXP sigmaSEXP, SEXP qSEXP, SEXP cparSEXP, SEXP pSEXP, SEXP effort_initSEXP, SEXP biomass_initSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< int >::type t_end(t_endSEXP );
-        Rcpp::traits::input_parameter< int >::type num_pop(num_popSEXP );
-        Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP );
-        Rcpp::traits::input_parameter< double >::type beta(betaSEXP );
-        Rcpp::traits::input_parameter< double >::type m(mSEXP );
-        Rcpp::traits::input_parameter< double >::type n(nSEXP );
-        Rcpp::traits::input_parameter< double >::type sigma(sigmaSEXP );
-        Rcpp::traits::input_parameter< double >::type q(qSEXP );
-        Rcpp::traits::input_parameter< double >::type cpar(cparSEXP );
-        Rcpp::traits::input_parameter< double >::type p(pSEXP );
-        Rcpp::traits::input_parameter< double >::type effort_init(effort_initSEXP );
-        Rcpp::traits::input_parameter< double >::type biomass_init(biomass_initSEXP );
-        Rcpp::List __result = paradox_pe_sim(t_end, num_pop, alpha, beta, m, n, sigma, q, cpar, p, effort_init, biomass_init);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
 // paradox_sim
-NumericMatrix paradox_sim(int t_end = 1000, int num_pop = 10, NumericVector alpha = NumericVector::create(), double beta = 1/150, double m = 0.01, double n = 1, double sigma = 0.05, double q = 0.01, double cpar = 1.4, double p = 0.5, double effort_init = 10, double biomass_init = 50);
-RcppExport SEXP paradox_paradox_sim(SEXP t_endSEXP, SEXP num_popSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP mSEXP, SEXP nSEXP, SEXP sigmaSEXP, SEXP qSEXP, SEXP cparSEXP, SEXP pSEXP, SEXP effort_initSEXP, SEXP biomass_initSEXP) {
+Rcpp::List paradox_sim(int t_end = 1000, int num_pop = 10, NumericVector alpha = NumericVector::create(), double beta = 1/150, double m = 0.01, double n = 1, double sigma = 0.05, double q = 0.01, double cpar = 1.4, double p = 0.5, double effort_init = 10, double biomass_init = 50, double vuln_thresh = 0.1, int burnin = 500, bool return_ts = false);
+RcppExport SEXP paradox_paradox_sim(SEXP t_endSEXP, SEXP num_popSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP mSEXP, SEXP nSEXP, SEXP sigmaSEXP, SEXP qSEXP, SEXP cparSEXP, SEXP pSEXP, SEXP effort_initSEXP, SEXP biomass_initSEXP, SEXP vuln_threshSEXP, SEXP burninSEXP, SEXP return_tsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -67,7 +24,10 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< double >::type p(pSEXP );
         Rcpp::traits::input_parameter< double >::type effort_init(effort_initSEXP );
         Rcpp::traits::input_parameter< double >::type biomass_init(biomass_initSEXP );
-        NumericMatrix __result = paradox_sim(t_end, num_pop, alpha, beta, m, n, sigma, q, cpar, p, effort_init, biomass_init);
+        Rcpp::traits::input_parameter< double >::type vuln_thresh(vuln_threshSEXP );
+        Rcpp::traits::input_parameter< int >::type burnin(burninSEXP );
+        Rcpp::traits::input_parameter< bool >::type return_ts(return_tsSEXP );
+        Rcpp::List __result = paradox_sim(t_end, num_pop, alpha, beta, m, n, sigma, q, cpar, p, effort_init, biomass_init, vuln_thresh, burnin, return_ts);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

@@ -6,13 +6,18 @@ Authors@R: c(person("Justin", "Yeakel", email =
     "jdyeakel@gmail.com", role = c("aut", "cre")),
     person("Sean", "Anderson", email = "sean@seananderson.ca", role =
     "aut"))
-Depends: R (>= 3.0.2)
+Depends:
+    R (>= 3.0.2)
 License: GPL-3
 LazyData: true
 LinkingTo: Rcpp
-Collate: 'RcppExports.R' 'paradox-package.r' 'paradox_sim_R.r'
-        'smooth_pal.r'
+Collate:
+    'RcppExports.R'
+    'paradox-package.r'
+    'paradox_sim_R.r'
+    'smooth_pal.r'
+    'filled_contour.r'
 Packaged: 2013-11-19 22:58:44 UTC; seananderson
 Author: Justin Yeakel [aut, cre],
-  Sean Anderson [aut]
+    Sean Anderson [aut]
 Maintainer: Justin Yeakel <jdyeakel@gmail.com>
