@@ -88,9 +88,9 @@ Rcpp::List paradox_pe_sim(
   double sync = pow(sd(total), 2)/ pow(sum(sd_ts), 2);
   
   // Calculate Vulnerability Metric
-  double vuln_cnt = 0;
+  int vuln_cnt = 0;
   for (int i = 0; i < num_pop; ++i) {
-    double vuln_TF = 0;
+    int vuln_TF = 0;
     for (int j = 0; j < (t_end - burnin); ++j) {
       if (biomass_burned(i,j) < vuln_thresh * mean_ts(i)) {
         vuln_TF += 1;
@@ -109,4 +109,8 @@ Rcpp::List paradox_pe_sim(
                             Rcpp::Named("mean_total") = sd_total,
                             Rcpp::Named("sync") = sync,
                             Rcpp::Named("vuln") = vuln);
+                Rcpp::Named("vuln") = vuln);
+  
+  if (return_ts == true) {
+  out = Rcpp::List::create(Rcpp::Named("biomass") = biomass,
 }
