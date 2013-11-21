@@ -18,9 +18,10 @@ Rcpp::List paradox_pe_sim(
     double cpar = 1.4, 
     double p = 0.5,
     double effort_init = 10,
-    double biomass_init = 50
+    double biomass_init = 50,
     double vuln_thresh = 0.1,
     int burnin = 500,
+    bool return_ts = false
     ) {
   NumericMatrix biomass(num_pop, t_end);
   NumericVector effort(t_end);
@@ -31,6 +32,9 @@ Rcpp::List paradox_pe_sim(
   NumericVector mean_ts(num_pop);
   NumericVector total(t_end - burnin);
   NumericVector CV_ts(num_pop);
+
+  Rcpp::DataFrame performance;
+  Rcpp::List out;
 
   // initialize simulation values in first year
   for (int i = 0; i < num_pop; ++i) {
@@ -102,15 +106,28 @@ Rcpp::List paradox_pe_sim(
   }
   double vuln = vuln_cnt / num_pop;
   
-  return Rcpp::List::create(Rcpp::Named("pe") = PE,
-                            Rcpp::Named("mean_sd_ts") = mean_sd_ts,
-                            Rcpp::Named("mean_mean_ts") = mean_mean_ts,
-                            Rcpp::Named("sd_total") = sd_total,
-                            Rcpp::Named("mean_total") = sd_total,
-                            Rcpp::Named("sync") = sync,
-                            Rcpp::Named("vuln") = vuln);
+  //return Rcpp::List::create(Rcpp::Named("pe") = PE,
+                            //Rcpp::Named("mean_sd_ts") = mean_sd_ts,
+                            //Rcpp::Named("mean_mean_ts") = mean_mean_ts,
+                            //Rcpp::Named("sd_total") = sd_total,
+                            //Rcpp::Named("mean_total") = sd_total,
+                            //Rcpp::Named("sync") = sync,
+                            //Rcpp::Named("vuln") = vuln);
+  performance = Rcpp::DataFrame::create(Rcpp::Named("pe") = PE,
+                Rcpp::Named("mean_sd_ts") = mean_sd_ts,
+                Rcpp::Named("mean_mean_ts") = mean_mean_ts,
+                Rcpp::Named("sd_total") = sd_total,
+                Rcpp::Named("mean_total") = sd_total,
+                Rcpp::Named("sync") = sync,
                 Rcpp::Named("vuln") = vuln);
   
   if (return_ts == true) {
   out = Rcpp::List::create(Rcpp::Named("biomass") = biomass,
+                           Rcpp::Named("effort") = effort,
+                           Rcpp::Named("performance") = performance);
+  } else {
+  out = Rcpp::List::create(Rcpp::Named("performance") = performance);
+  }
+
+  return out;
 }
