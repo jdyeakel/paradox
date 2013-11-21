@@ -3,7 +3,7 @@
 #' @export
 #' @param x A data.frame as output from \code{\link{paradox_sim_reps}}.
 #' @examples
-#' out <- paradox_sim_reps(reps = 10)
+#' out <- paradox_sim_reps(reps = 10, t_end = 300, burnin = 150)
 #' paradox_diag_plot(out)
 
 paradox_diag_plot <- function(x) {
@@ -27,8 +27,12 @@ paradox_diag_plot <- function(x) {
   for(i in seq_len(length(titles))) {
     with(z[[i]], filled_contour(x_vals, y_vals, vals, levels = levels_, col = col))
     mtext(titles[i])
-   }
-  with(x, plot(num_pop, vuln, col = "#00000050", pch = 19, cex = 0.9))
+    if(i == 1) {
+      with(x, plot(num_pop, vuln, col = "#00000050", pch = 19, cex =
+          0.9, ylim = c(0, 1), yaxs = "i"))
+      mtext("Vulnerability")
+    }
+  }
   invisible()
 }
 
