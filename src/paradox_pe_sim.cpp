@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' Paradox simulation with PE output for speed
+//' Paradox simulation with PE output for speed YEA
 //'
 //' @export
 // [[Rcpp::export]]
@@ -92,11 +92,27 @@ Rcpp::List paradox_pe_sim(
   double PE = mean(CV_ts / CV_total);
 
   double sync = pow(sd(total), 2)/ pow(sum(sd_ts), 2);
-
+  
+  // Calculate Vulnerability Metric
+  double vuln_cnt = 0;
+  for (int i = 0; i < num_pop; ++i) {
+    double vuln_TF = 0;
+    for (int j = 0; j < (t_end - burnin); ++j) {
+      if (biomass_burned(i,j) < 0.10*mean_ts(i)) {
+        vuln_TF = vuln_TF + 1;
+        }
+    }
+    if (vuln_TF > 0) {
+      vuln_cnt = vuln_cnt + 1;
+    }
+  }
+  double vuln = vuln_cnt / num_pop;
+  
   return Rcpp::List::create(Rcpp::Named("pe") = PE,
                             Rcpp::Named("mean_sd_ts") = mean_sd_ts,
                             Rcpp::Named("mean_mean_ts") = mean_mean_ts,
                             Rcpp::Named("sd_total") = sd_total,
                             Rcpp::Named("mean_total") = sd_total,
-                            Rcpp::Named("sync") = sync);
+                            Rcpp::Named("sync") = sync,
+                            Rcpp::Named("vuln") = vuln);
 }

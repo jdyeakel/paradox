@@ -28,7 +28,7 @@ get_pe <- function(x, num_pop, t_end) {
     .Call('paradox_get_pe', PACKAGE = 'paradox', x, num_pop, t_end)
 }
 
-#' Paradox simulation with PE output for speed
+#' Paradox simulation with PE output for speed YEA
 #'
 #' @export
 paradox_pe_sim <- function(t_end = 1000L, num_pop = 10L, alpha = numeric(), beta = 1/150, m = 0.01, n = 1, sigma = 0.05, q = 0.01, cpar = 1.4, p = 0.5, effort_init = 10, biomass_init = 50) {

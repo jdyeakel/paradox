@@ -21,18 +21,20 @@ paradox_sim_out <- plyr::adply(d, 1, function(x) {
     temp <- with(x, paradox_pe_sim(t_end = 1000, alpha = rep(alpha,
           num_pop), beta = beta, m = m, q = q, n = n, num_pop =
         num_pop, cpar = cpar, p = p, sigma = sigma))
-    data.frame(pe = temp$pe)
+    data.frame(pe = temp$pe, vuln = temp$vuln)
 })
-  data.frame(pe = mean(junk$pe))
+  data.frame(pe = mean(junk$pe), vuln = mean(junk$vuln))
 })
-
+#browser()
 col <- RColorBrewer::brewer.pal(9, "YlOrRd")
 col <- smooth_pal(col, 5)
 z <- as.matrix(reshape2::dcast(paradox_sim_out, num_pop ~ sigma, value.var = "pe")[,-1])
 filled.contour(seq(1, MaxN, length.out = nrow(z)), seq(0, 0.3,
      length.out = ncol(z)), z, col = col, ylab = "Sigma", xlab = "N",
    levels = seq(1, max(z), length.out = length(col)),
-   main = "Portfolio Effect", lwd = 0.1)}
+   main = "Portfolio Effect", lwd = 0.1)
+#plot(paradox_sim_out$pe,paradox_sim_out$vuln,ylim=c(0,1),xlim=c(1,2))
+}
 , m = slider(0.01, 0.2, 0.1), 
   q = slider(0.001, 0.2, 0.01), 
   cpar = slider(0.5, 4, 2), 
