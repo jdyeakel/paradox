@@ -28,6 +28,8 @@
 #' @param return_ts Logical indicating whether the time series should be
 #' returned as part of the output. \code{FALSE} by default to save memory if
 #' running many repetitions.
+#' @param print_diagnostics Logical indicating whether some print
+#' statements should be enabled to help debug.
 #' @author Original model developed by Justin Yeakel. C++ version
 #' originally ported by Sean Anderson.
 #' @return A list object. \code{$performance} contains the performance
@@ -51,7 +53,7 @@
 #' plot(out$effort[-c(1:500)], type = "l", ylab = "Effort", xlab = "Year")
 #' par(op)
 #' @export
-paradox_sim <- function(t_end = 1000L, num_pop = 10L, alpha = numeric(), beta = 1/150, m = 0.01, n = 1, sigma = 0.05, q = 0.01, cpar = 1.4, p = 0.5, effort_init = 10, biomass_init = 50, vuln_thresh = 0.1, burnin = 500L, return_ts = FALSE) {
-    .Call('paradox_paradox_sim', PACKAGE = 'paradox', t_end, num_pop, alpha, beta, m, n, sigma, q, cpar, p, effort_init, biomass_init, vuln_thresh, burnin, return_ts)
+paradox_sim <- function(t_end = 1000L, num_pop = 10L, alpha = numeric(), beta = 1/150, m = 0.01, n = 1, sigma = 0.05, q = 0.01, cpar = 1.4, p = 0.5, effort_init = 10, biomass_init = 50, vuln_thresh = 0.1, burnin = 500L, return_ts = FALSE, print_diagnostics = FALSE) {
+    .Call('paradox_paradox_sim', PACKAGE = 'paradox', t_end, num_pop, alpha, beta, m, n, sigma, q, cpar, p, effort_init, biomass_init, vuln_thresh, burnin, return_ts, print_diagnostics)
 }
 

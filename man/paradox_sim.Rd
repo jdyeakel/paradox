@@ -6,7 +6,8 @@
     alpha = numeric(), beta = 1/150, m = 0.01, n = 1,
     sigma = 0.05, q = 0.01, cpar = 1.4, p = 0.5,
     effort_init = 10, biomass_init = 50, vuln_thresh = 0.1,
-    burnin = 500L, return_ts = FALSE)
+    burnin = 500L, return_ts = FALSE,
+    print_diagnostics = FALSE)
 }
 \arguments{
   \item{t_end}{Number of time steps to simulate over}
@@ -53,6 +54,9 @@
   series should be returned as part of the output.
   \code{FALSE} by default to save memory if running many
   repetitions.}
+
+  \item{print_diagnostics}{Logical indicating whether some
+  print statements should be enabled to help debug.}
 }
 \value{
   A list object. \code{$performance} contains the
