@@ -26,18 +26,19 @@ paradox_sim_reps <- function(t_end = 500, burnin = 200, alpha = 0.5,
     setup_parallel()
     out_ <- foreach(row_i = rows_, .verbose = FALSE) %dopar% {
       args_i <- d[row_i, ]
-      with(args_i, paradox_sim(t_end = 50, alpha = rep(alpha, num_pop),
+      with(args_i, paradox_sim(t_end = t_end, alpha = rep(alpha, num_pop),
           beta = beta, sigma = sigma, num_pop = num_pop, m = m, q = q,
           cpar = cpar, p = p, n = n, return_ts = FALSE, burnin =
-          0))$performance
+          burnin))$performance
     }
   } else {
-    out_ <- foreach(row_i = rows_, .verbose = FALSE) %dopar% {
+    require(foreach)
+    out_ <- foreach(row_i = rows_, .verbose = FALSE) %do% {
       args_i <- d[row_i, ]
-      with(args_i, paradox_sim(t_end = 50, alpha = rep(alpha, num_pop),
+      with(args_i, paradox_sim(t_end = t_end, alpha = rep(alpha, num_pop),
           beta = beta, sigma = sigma, num_pop = num_pop, m = m, q = q,
           cpar = cpar, p = p, n = n, return_ts = FALSE, burnin =
-          0))$performance
+          burnin))$performance
     }
   }
 
