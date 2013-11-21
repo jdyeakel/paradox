@@ -28,6 +28,8 @@ using namespace Rcpp;
 //' @param return_ts Logical indicating whether the time series should be
 //' returned as part of the output. \code{FALSE} by default to save memory if
 //' running many repetitions.
+//' @param print_diagnostics Logical indicating whether some print
+//' statements should be enabled to help debug.
 //' @author Original model developed by Justin Yeakel. C++ version
 //' originally ported by Sean Anderson.
 //' @return A list object. \code{$performance} contains the performance
@@ -68,7 +70,8 @@ Rcpp::List paradox_sim(
     double biomass_init = 50,
     double vuln_thresh = 0.1,
     int burnin = 500,
-    bool return_ts = false
+    bool return_ts = false,
+    bool print_diagnostics = false
     ) {
   NumericMatrix biomass(num_pop, t_end);
   NumericVector effort(t_end);
@@ -107,7 +110,7 @@ Rcpp::List paradox_sim(
     effort(j) = effort(j-1) * exp(-cpar) + p * total_biomass * 
       ((q * effort(j-1))/(m + q * effort(j-1))) * (1-exp(-m-q*effort(j-1)));
   }
-    
+
   // remove burn-in period:
   NumericMatrix biomass_burned(num_pop, t_end - burnin);
   NumericVector effort_burned(t_end - burnin);
@@ -136,7 +139,17 @@ Rcpp::List paradox_sim(
 	CV_ts = sd_ts / mean_ts;
 	double CV_total = sd_total / mean_total;
 
-  double PE = mean(CV_ts / CV_total);
+
+  double mean_cv_ts = mean(CV_ts);
+
+  double PE = mean_cv_ts / CV_total;
+
+  if (print_diagnostics) {
+    Rcout << "subpop 1 cv" << CV_ts(1) <<std::endl;
+    Rcout << "cv total" << CV_total <<std::endl;
+    Rcout << "mean cv subpops" << mean_cv_ts <<std::endl;
+    Rcout << "pe" << PE << std::endl;
+  }
 
   double sync = pow(sd(total), 2)/ pow(sum(sd_ts), 2);
   
