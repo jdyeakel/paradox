@@ -19,6 +19,7 @@ Rcpp::List paradox_pe_sim(
     double p = 0.5,
     double effort_init = 10,
     double biomass_init = 50
+    double vuln_thresh = 0.1,
     int burnin = 500,
     ) {
   NumericMatrix biomass(num_pop, t_end);
@@ -97,7 +98,7 @@ Rcpp::List paradox_pe_sim(
   for (int i = 0; i < num_pop; ++i) {
     double vuln_TF = 0;
     for (int j = 0; j < (t_end - burnin); ++j) {
-      if (biomass_burned(i,j) < 0.10*mean_ts(i)) {
+      if (biomass_burned(i,j) < vuln_thresh * mean_ts(i)) {
         vuln_TF += 1;
         }
     }
